@@ -1,20 +1,23 @@
 {
   "name": "printable-characters",
-  "version": "1.0.42",
-  "description": "A little helper for handling strings containing zero width control characters, ANSI styling, whitespaces, newlines, 💩, etc.",
-  "main": "./build/printable-characters.js",
-  "scripts": {
-    "lint": "eslint printable-characters.js",
-    "lint-test": "eslint printable-characters.js",
-    "babel": "babel printable-characters.js --source-maps inline --out-file ./build/printable-characters.js",
-    "build": "npm run lint && npm run lint-test && npm run babel",
-    "test": "npm run build && env PRINTABLE_CHARACTERS_TEST_FILE=./build/printable-characters.js nyc --reporter=html --reporter=text mocha --reporter spec",
-    "autotest": "env PRINTABLE_CHARACTERS_TEST_FILE=./printable-characters.js mocha --reporter spec --watch",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  "version": "1.1.0",
+  "description": "A tool to handle special characters in strings, originally by @xpl",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.js",
+    "types": "./index.d.ts"
   },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "./index.js",
+    "./index.mjs",
+    "./index.d.ts"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xpl/printable-characters.git"
+    "url": "git+https://github.com/hiimjustin000/printable-characters.git"
   },
   "keywords": [
     "string width",
@@ -56,17 +59,17 @@
     "ansi",
     "whitespaces"
   ],
-  "author": "Vitaly Gordon <rocket.mind@gmail.com>",
+  "author": "hiimjustin000",
+  "contributors": [
+    "Vitaly Gordon <https://github.com/xpl>",
+    "Justin Pridgen <https://github.com/hiimjustin000>"
+  ],
   "license": "Unlicense",
-  "homepage": "https://github.com/xpl/printable-characters",
+  "homepage": "https://github.com/hiimjustin000/printable-characters#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-block-scoped-functions": "^6.22.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
-    "coveralls": "^2.13.3",
-    "eslint": "^4.8.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.5.3",
-    "nyc": "^11.2.1"
-  }
+    "@types/mocha": "^10.0.1",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.4"
+  },
+  "packageManager": "pnpm@7.29.1"
 }
