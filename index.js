@@ -1,19 +1,23 @@
 // https://blog.jonnew.com/posts/poo-dot-length-equals-two
 
-const partitioner = /((?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\t\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f])?([^\t\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]*)/g;
-const zeroWidthNonLineTerms = /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]/g;
+const partitioner =
+    /((?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\t\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f])?([^\t\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]*)/g;
+const zeroWidthNonLineTerms =
+    /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]/g;
 
 /**
  * A regular expression to match ANSI escape codes.
  * @type {RegExp}
  */
-const ansiEscapeCodes = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
+const ansiEscapeCodes =
+    /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
 
 /**
  * A regular expression to match zero-width characters.
  * @type {RegExp}
  */
-const zeroWidthCharacters = /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]/g;
+const zeroWidthCharacters =
+    /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]/g;
 
 /**
  * Returns a blank string with the same width as the input string.
@@ -21,7 +25,9 @@ const zeroWidthCharacters = /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,
  * @returns {string}
  */
 function blank(input) {
-    return Array.from(input.replace(zeroWidthNonLineTerms, "")).map(x => (x == "\t" || x == "\n") ? x : " ").join("");
+    return Array.from(input.replace(zeroWidthNonLineTerms, ""))
+        .map(x => (x == "\t" || x == "\n" ? x : " "))
+        .join("");
 }
 
 /**
@@ -33,7 +39,7 @@ function blank(input) {
 function first(input, length) {
     let len = 0;
     return partition(input).reduce((a, x) => {
-        const text = Array.from(x[1]).slice(0, length - a[1]);
+        const text = Array.from(x[1]).slice(0, length - len);
         len += text.length;
         return a + x[0] + text.join("");
     }, "");
@@ -45,7 +51,9 @@ function first(input, length) {
  * @returns {boolean}
  */
 function isBlank(input) {
-    return input.replace(zeroWidthCharacters, "").replace(/\s/g, "").length <= 0;
+    return (
+        input.replace(zeroWidthCharacters, "").replace(/\s/g, "").length <= 0
+    );
 }
 
 /**
@@ -54,7 +62,9 @@ function isBlank(input) {
  * @returns {string[][]}
  */
 function partition(input) {
-    return Array.from(input.matchAll(partitioner)).filter(x => x.index < input.length).map(x => [x[1] ?? "", x[2]]);
+    return Array.from(input.matchAll(partitioner))
+        .filter(x => x.index < input.length)
+        .map(x => [x[1] ?? "", x[2]]);
 }
 
 /**
@@ -74,4 +84,4 @@ module.exports = {
     partition,
     strlen,
     zeroWidthCharacters
-}
+};

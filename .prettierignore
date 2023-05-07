@@ -1,0 +1,6 @@
+*
+!*.js
+!*.ts
+.git
+.vscode
+node_modules

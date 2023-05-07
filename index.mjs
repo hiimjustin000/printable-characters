@@ -33,7 +33,7 @@ function blank(input) {
 function first(input, length) {
     let len = 0;
     return partition(input).reduce((a, x) => {
-        const text = Array.from(x[1]).slice(0, length - a[1]);
+        const text = Array.from(x[1]).slice(0, length - len);
         len += text.length;
         return a + x[0] + text.join("");
     }, "");
