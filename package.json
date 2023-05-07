@@ -76,6 +76,5 @@
     "@types/mocha": "^10.0.1",
     "mocha": "^10.2.0",
     "prettier": "^2.8.4"
-  },
-  "packageManager": "pnpm@7.29.1"
+  }
 }
