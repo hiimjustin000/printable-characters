@@ -7,20 +7,20 @@ const zeroWidthNonLineTerms = /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{
  * A regular expression to match ANSI escape codes.
  * @type {RegExp}
  */
-export const ansiEscapeCodes = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
+const ansiEscapeCodes = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
 
 /**
  * A regular expression to match zero-width characters.
  * @type {RegExp}
  */
-export const zeroWidthCharacters = /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]/g;
+const zeroWidthCharacters = /(?:[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><])|[\n\u0000-\u0008\u000B-\u0019\u001b\u009b\u00ad\u200b\u2028\u2029\ufeff\ufe00-\ufe0f]/g;
 
 /**
  * Returns a blank string with the same width as the provided string.
  * @param {string} input
  * @returns {string}
  */
-export function blank(input) {
+function blank(input) {
     return Array.from(input.replace(zeroWidthNonLineTerms, "")).map(x => (x == "\t" || x == "\n") ? x : " ").join("");
 }
 
@@ -30,11 +30,13 @@ export function blank(input) {
  * @param {number} length
  * @returns {string}
  */
-export function first(input, length) {
+function first(input, length) {
+    let len = 0;
     return partition(input).reduce((a, x) => {
         const text = Array.from(x[1]).slice(0, length - a[1]);
-        return [a[0] + x[0] + text.join(""), a[1] + text.length];
-    }, ["", 0])[0];
+        len += text.length;
+        return a + x[0] + text.join("");
+    }, "");
 }
 
 /**
@@ -42,7 +44,7 @@ export function first(input, length) {
  * @param {string} input
  * @returns {boolean}
  */
-export function isBlank(input) {
+function isBlank(input) {
     return input.replace(zeroWidthCharacters, "").replace(/\s/g, "").length <= 0;
 }
 
@@ -51,7 +53,7 @@ export function isBlank(input) {
  * @param {string} input
  * @returns {string[][]}
  */
-export function partition(input) {
+function partition(input) {
     return Array.from(input.matchAll(partitioner)).filter(x => x.index < input.length).map(x => [x[1] ?? "", x[2]]);
 }
 
@@ -60,6 +62,16 @@ export function partition(input) {
  * @param {string} input
  * @returns {number}
  */
-export function strlen(input) {
+function strlen(input) {
     return Array.from(input.replace(zeroWidthCharacters, "")).length;
+}
+
+export {
+    ansiEscapeCodes,
+    blank,
+    first,
+    isBlank,
+    partition,
+    strlen,
+    zeroWidthCharacters
 }

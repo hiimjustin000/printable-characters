@@ -1,6 +1,6 @@
 {
   "name": "printable-characters",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A tool to handle special characters in strings, originally by @xpl",
   "exports": {
     "import": "./index.mjs",
@@ -61,8 +61,14 @@
   ],
   "author": "hiimjustin000",
   "contributors": [
-    "Vitalik Gordon <https://github.com/xpl>",
-    "Justin Pridgen <https://github.com/hiimjustin000>"
+    {
+        "name": "Justin Pridgen",
+        "url": "https://github.com/hiimjustin000"
+    },
+    {
+        "name": "Vitalik Gordon",
+        "url": "https://github.com/xpl"
+    }
   ],
   "license": "Unlicense",
   "homepage": "https://github.com/hiimjustin000/printable-characters#readme",
